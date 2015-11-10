@@ -1,11 +1,34 @@
 # -*- coding: utf-8 -*-
 
+import re
 from decimal import Decimal, getcontext
 PRECISION = 10
 
 
+def divide(x, y):
+    if y == 0:
+        return 'Invalid input'
+    else:
+        return x / y
+
+
+def add(x, y):
+    return x + y
+
+
+def sub(x, y):
+    return x - y
+
+
+def mult(x, y):
+    return x * y
+
+
 def root(x, y):
     getcontext().prec = PRECISION
+    if x < 0 or y < 0:
+        return 'Invalid input'
+
     x = Decimal(x)
     y = Decimal(y)
     x0 = x / y
@@ -19,30 +42,31 @@ def root(x, y):
 
 def calc(s):
     s = s.replace(' ', '')
-
-    s_split = s.split('+')
-    if len(s_split) == 2:
-        return float(s_split[0]) + float(s_split[1])
-    s_split = s.split('-')
-    if len(s_split) == 2:
-        return float(s_split[0]) - float(s_split[1])
-    s_split = s.split('*')
-    if len(s_split) == 2:
-        return float(s_split[0]) * float(s_split[1])
-    s_split = s.split('/')
-    if len(s_split) == 2:
-        return float(s_split[0]) / float(s_split[1])
-    s_split = s.split('root')
-    if len(s_split) == 2:
-        return root(float(s_split[0]), float(s_split[1]))
-    else:
+    s_split = re.split("([*/+]|--|root)", s)
+    try:
+        arg1, arg2 = float(s_split[0]), float(s_split[2])
+    except ValueError:
         return 'Invalid input'
+    operation = s_split[1]
+
+    f = operation_map[operation]
+
+    return f(arg1, arg2)
+
+
+operation_map = {
+    '/': divide,
+    '+': add,
+    '--': sub,
+    '*': mult,
+    'root': root
+}
 
 
 def main():
     print 'Operations: '
     print 'Summ: a + b'
-    print 'Subtract: a - b'
+    print 'Subtract: a -- b'
     print 'Multiply: a * b'
     print 'Divide: a / b'
     print 'N-th root: a root n'
@@ -52,7 +76,7 @@ def main():
     while s != 'stop':
         s = raw_input('Write expression or \"stop\" to stop: ')
         print calc(s)
-    print 'goodbye'
+    print 'Goodbye!'
 
 if __name__ == '__main__':
     main()
