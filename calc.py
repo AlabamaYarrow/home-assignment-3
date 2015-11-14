@@ -3,6 +3,9 @@ import numbers
 PRECISION = 10
 
 
+getcontext().prec = PRECISION
+
+
 def are_numeric(*args):
     for arg in args:
         if not isinstance(arg, numbers.Number):
@@ -16,37 +19,39 @@ def divide(x, y):
     if y == 0:
         return 'Invalid input'
     else:
-        return x / y
+        getcontext().prec = PRECISION
+        return Decimal(x) / Decimal(y)
 
 
 def add(x, y):
     if not are_numeric(x, y):
         return 'Invalid input'
-    return x + y
+
+    return float(Decimal(x) + Decimal(y))
 
 
 def sub(x, y):
     if not are_numeric(x, y):
         return 'Invalid input'
-    return x - y
+    return float(Decimal(x) - Decimal(y))
 
 
 def mult(x, y):
     if not are_numeric(x, y):
         return 'Invalid input'
-    return x * y
+    return float(Decimal(x) * Decimal(y))
 
 
 def root(x, y):
     if not are_numeric(x, y):
         return 'Invalid input'
-    if x < 0 or y <= 0:
+    if (x < 0 and y % 2 == 0) or y <= 0:
         return 'Invalid input'
     if not isinstance(y, (int, long)):
         return 'Invalid input'
 
-    getcontext().prec = PRECISION
-
+    if x == 0:
+        return 0
     x = Decimal(x)
     y = Decimal(y)
     x0 = x / y

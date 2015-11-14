@@ -26,6 +26,9 @@ class CalculatorAddTestCase(unittest.TestCase):
     def test_add_string_2(self):
         self.assertEqual('Invalid input', calc.add('1', 1))
 
+    def test_add2(self):
+        self.assertEqual(0.3, calc.add(0.1, 0.2))
+
 
 class CalculatorSubTestCase(unittest.TestCase):
     def test_sub(self):
@@ -45,6 +48,9 @@ class CalculatorSubTestCase(unittest.TestCase):
 
     def test_sub_string_2(self):
         self.assertEqual('Invalid input', calc.sub('1', 1))
+
+    def test_sub2(self):
+        self.assertEqual(0.2, calc.sub(0.3, 0.1))
 
 
 class CalculatorMulTestCase(unittest.TestCase):
@@ -72,6 +78,9 @@ class CalculatorMulTestCase(unittest.TestCase):
     def test_mul_string_2(self):
         self.assertEqual('Invalid input', calc.mult('1', 1))
 
+    def test_mul2(self):
+        self.assertEqual(1.2, calc.mult(12, 0.1))
+
 
 class CalculatorDivideTestCase(unittest.TestCase):
     def test_div(self):
@@ -95,16 +104,25 @@ class CalculatorDivideTestCase(unittest.TestCase):
     def test_div_string_2(self):
         self.assertEqual('Invalid input', calc.divide('1', 1))
 
+    def test_div2(self):
+        self.assertEqual(3, calc.divide(0.3, 0.1))
+
+    def test_div3(self):
+        self.assertNotEqual(4, calc.divide(53, 12))
+
 
 class CalculatorRootTestCase(unittest.TestCase):
     def test_root(self):
         self.assertEqual(3, calc.root(27, 3))
 
+    def test_root_negative(self):
+        self.assertEqual(-3, calc.root(-27, 3))
+
+    def test_root_negative_even(self):
+        self.assertEqual('Invalid input', calc.root(-27, 2))
+
     def test_root_float_y(self):
         self.assertEqual('Invalid input', calc.root(27, 3.5))
-
-    def test_root_negative(self):
-        self.assertEqual('Invalid input', calc.root(-27, 3))
 
     def test_root_zero_y(self):
         self.assertEqual('Invalid input', calc.root(1, 0))
