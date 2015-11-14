@@ -1,43 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re
-from decimal import Decimal, getcontext
-PRECISION = 10
-
-
-def divide(x, y):
-    if y == 0:
-        return 'Invalid input'
-    else:
-        return x / y
-
-
-def add(x, y):
-    return x + y
-
-
-def sub(x, y):
-    return x - y
-
-
-def mult(x, y):
-    return x * y
-
-
-def root(x, y):
-    getcontext().prec = PRECISION
-    if x < 0 or y < 0:
-        return 'Invalid input'
-
-    x = Decimal(x)
-    y = Decimal(y)
-    x0 = x / y
-    x1 = 1
-
-    while True:
-        x0, x1 = x1, (1 / y)*((y - 1)*x0 + (x / (x0 ** (y - 1))))
-        if x0 == x1:
-            return x1
+from calc import divide, add, sub, mult, root
 
 
 def calc(s):
